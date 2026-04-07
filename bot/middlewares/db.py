@@ -10,8 +10,8 @@ class DbSessionMiddleware(BaseMiddleware):
     
     async def __call__(self, handler: Callable[[Message, Dict[str, Any]],
                              Awaitable[Any]], 
-                             event: Message, 
+                             message: Message, 
                              data: Dict[str, Any]):
         async with self.session_pool() as session:
             data["session"] = session
-            return await handler(event, data)
+            return await handler(message, data)
